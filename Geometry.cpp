@@ -7,7 +7,7 @@ public:
     double x;
     double y;
     double mag;
-    double theta;
+    double theta;//angle relative to the unit circle
 
     Vector2d()
     {
@@ -108,7 +108,7 @@ public:
         scalar = length;
     }
 
-    Vector2d *getIntersectionPoint(Line2d line2) // returns a pointer to a point lol but kinda like vector2d
+    Vector2d getIntersectionPoint(const Line2d& line2) const // returns a pointer to a point lol but kinda like vector2d
     {
         // parametric form of vectors taken
         if (((line2.directionVector.y * directionVector.x) - (line2.directionVector.x * directionVector.y)) == 0)
@@ -121,78 +121,10 @@ public:
                    ((directionVector.x * line2.directionVector.y) -
                     (directionVector.y * line2.directionVector.x));
 
-        return new Vector2d(pointVector.x + directionVector.x * t, pointVector.y + directionVector.y * t);
+        return Vector2d(pointVector.x + directionVector.x * t, pointVector.y + directionVector.y * t);
     }
 
     Vector2d pointOfIntersection(Line2d line2) {
 
     };
 };
-
-class Vector3d
-{
-public:
-    double x;
-    double y;
-    double z;
-    double mag;
-    double theta;
-    double phi;
-
-    Vector3d()
-    {
-        x = 0.0;
-        y = 0.0;
-        z = 0.0;
-        mag = 0.0;
-        theta = 0.0;
-        phi = 0.0;
-    }
-
-    Vector3d(double x_, double y_, double z_)
-    {
-        x = x_;
-        y = y_;
-        z = z_;
-        mag = sqrt(x * x + y * y + z * z);
-        theta = mag != 0.0 ? std::clamp(acos(z / mag), -1.0, 1.0) : 0.0;
-        phi = atan2(y, x);
-    }
-};
-
-class rectangle
-{
-public:
-    double height;
-    double width;
-    Vector2d normalVector;
-    Vector2d locaion; // defines the bottom left corner of the rectangle
-
-    rectangle(double height_, double width_, Vector2d normalVector_, Vector2d location_)
-    {
-        height = height_;
-        width = width_;
-        normalVector_._normalize();
-        normalVector = normalVector_;
-        locaion = locaion;
-    }
-};
-
-
-class ViewportPolygon{
-    public:
-    std::vector<Vector2D> points;
-
-    ViewportPolygon(std::vector<Vector2d>&& points_) : points(std::move(points_)) {}
-
-
-    
-};
-
-
-class PlayerViewport{
-    public:
-        
-
-
-}
